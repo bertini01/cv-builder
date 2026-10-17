@@ -1,0 +1,46 @@
+{
+  "name": "cv-builder",
+  "version": "1.0.0",
+  "description": "Write your CV as data, get a beautiful, ATS-friendly PDF. JSON Resume compatible, five premium themes, auto-fit to one page, live studio. Zero dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Iradukunda Bertin (https://bertin.vercel.app)",
+  "homepage": "https://github.com/bertini01/cv-builder#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bertini01/cv-builder.git"
+  },
+  "bugs": "https://github.com/bertini01/cv-builder/issues",
+  "keywords": [
+    "cv",
+    "resume",
+    "pdf",
+    "json-resume",
+    "resume-builder",
+    "cv-generator",
+    "ats",
+    "themes"
+  ],
+  "bin": {
+    "cv-builder": "bin/cv-builder.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node bin/cv-builder.mjs build examples/resume.json",
+    "studio": "node bin/cv-builder.mjs studio examples/resume.json",
+    "previews": "node scripts/previews.mjs",
+    "test": "node --test \"test/*.test.mjs\""
+  }
+}

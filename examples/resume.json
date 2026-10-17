@@ -1,0 +1,99 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Alex Morgan",
+    "label": "Senior Full-Stack Engineer",
+    "image": "avatar.svg",
+    "email": "alex.morgan@example.com",
+    "phone": "+351 912 345 678",
+    "url": "https://alexmorgan.dev",
+    "summary": "Full-stack engineer with **7+ years** of experience building fast, accessible products for fintech and e-commerce. I lead small teams from idea to production, care deeply about developer experience, and enjoy turning complex workflows into interfaces people love.",
+    "location": { "city": "Lisbon", "countryCode": "PT" },
+    "profiles": [
+      { "network": "GitHub", "username": "alexmorgan", "url": "https://github.com/alexmorgan" },
+      { "network": "LinkedIn", "username": "alex-morgan", "url": "https://www.linkedin.com/in/alex-morgan" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Northwind Labs",
+      "position": "Senior Full-Stack Engineer",
+      "url": "https://example.com",
+      "startDate": "2022-03",
+      "highlights": [
+        "Led a team of five rebuilding the merchant dashboard in Next.js, cutting load time by 58%.",
+        "Designed an event-driven billing service in NestJS processing 2M+ invoices a month.",
+        "Introduced end-to-end testing and preview deployments, halving production incidents."
+      ],
+      "keywords": ["Next.js", "NestJS", "PostgreSQL", "AWS"]
+    },
+    {
+      "name": "Lumen Pay",
+      "position": "Full-Stack Engineer",
+      "startDate": "2019-06",
+      "endDate": "2022-02",
+      "highlights": [
+        "Shipped the mobile wallet in React Native, reaching 250k users in its first year.",
+        "Built real-time fraud alerts with WebSockets and Redis.",
+        "Mentored four junior engineers through structured code reviews."
+      ],
+      "keywords": ["React Native", "Node.js", "Redis"]
+    },
+    {
+      "name": "Orbit Commerce",
+      "position": "Frontend Developer",
+      "startDate": "2017-09",
+      "endDate": "2019-05",
+      "highlights": [
+        "Developed a component library adopted across six storefronts.",
+        "Raised Lighthouse accessibility scores from 71 to 98."
+      ],
+      "keywords": ["React", "TypeScript", "Storybook"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Ledgerly",
+      "tagline": "Open-source invoicing for freelancers",
+      "description": "Self-hostable invoicing with recurring billing, multi-currency support and PDF exports.",
+      "keywords": ["Next.js", "Prisma", "Stripe"],
+      "url": "https://example.com/ledgerly",
+      "source": "https://github.com/alexmorgan/ledgerly"
+    },
+    {
+      "name": "Quill",
+      "tagline": "Markdown notes, offline-first",
+      "description": "A local-first notes app with end-to-end encrypted sync and a 4.8★ store rating.",
+      "keywords": ["React", "IndexedDB", "WebCrypto"],
+      "url": "https://example.com/quill"
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Lisbon",
+      "studyType": "BSc",
+      "area": "Computer Science",
+      "startDate": "2013",
+      "endDate": "2017",
+      "score": "First-class honours"
+    }
+  ],
+  "skills": [
+    { "name": "Languages", "keywords": ["TypeScript", "JavaScript", "Python", "Go", "SQL"] },
+    { "name": "Frontend", "keywords": ["React", "Next.js", "React Native", "Tailwind CSS"] },
+    { "name": "Backend", "keywords": ["Node.js", "NestJS", "PostgreSQL", "Redis", "GraphQL"] },
+    { "name": "Cloud & tooling", "keywords": ["AWS", "Docker", "Terraform", "GitHub Actions"] }
+  ],
+  "languages": [
+    { "language": "English", "fluency": "Native" },
+    { "language": "Portuguese", "fluency": "Professional" },
+    { "language": "Spanish", "fluency": "Intermediate" }
+  ],
+  "certificates": [
+    { "name": "AWS Certified Developer – Associate", "issuer": "Amazon Web Services", "date": "2023-04" }
+  ],
+  "interests": [
+    { "name": "Open source", "keywords": ["maintainer", "mentoring"] },
+    { "name": "Trail running" }
+  ]
+}

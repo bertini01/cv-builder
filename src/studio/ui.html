@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap">
+<style>
+:root {
+   --bg: #060a16; --panel: rgba(13, 20, 42, 0.78); --panel-2: rgba(255, 255, 255, 0.035); --line: rgba(148, 170, 255, 0.12);
+   --text: #e8eeff; --muted: #94a3c4; --subtle: #6b7a99; --blue: #3b82f6; --cyan: #22d3ee; --ok: #34d399; --warn: #fbbf24;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font: 13px/1.45 Inter, system-ui, sans-serif; color: var(--text); background: var(--bg); height: 100vh; overflow: hidden;
+   background-image: radial-gradient(60vmax 45vmax at 10% -10%, rgba(29, 78, 216, 0.28), transparent 60%), radial-gradient(50vmax 40vmax at 110% 110%, rgba(34, 211, 238, 0.12), transparent 60%); }
+button, input, select { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+button { cursor: pointer; }
+.app { display: grid; grid-template-columns: 330px 1fr; height: 100vh; }
+
+/* Sidebar */
+.panel { border-right: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(20px); display: flex; flex-direction: column; min-height: 0; }
+.brand { display: flex; align-items: center; gap: 12px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.logo { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; font: 700 14px Sora; color: #fff;
+   background: linear-gradient(135deg, var(--blue), var(--cyan)); box-shadow: 0 0 26px -6px rgba(59, 130, 246, 0.9); }
+.brand h1 { font: 700 15px Sora; letter-spacing: -0.01em; }
+.brand p { color: var(--subtle); font-size: 12px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.controls { flex: 1; overflow-y: auto; padding: 6px 20px 24px; scrollbar-width: thin; scrollbar-color: #233256 transparent; }
+.group { padding: 16px 0 6px; }
+.group > label, .group > .label { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600;
+   letter-spacing: 0.12em; text-transform: uppercase; color: var(--subtle); margin-bottom: 10px; }
+.label output { color: var(--text); font-size: 12px; letter-spacing: 0; text-transform: none; font-variant-numeric: tabular-nums; }
+
+.themes { display: grid; gap: 8px; }
+.theme { display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel-2); text-align: left; transition: 0.2s; }
+.theme:hover { border-color: rgba(96, 165, 250, 0.35); }
+.theme[aria-pressed="true"] { border-color: rgba(96, 165, 250, 0.7); background: rgba(59, 130, 246, 0.12); box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.25) inset; }
+.thumb { width: 44px; height: 56px; flex: none; border-radius: 6px; background: #fff; padding: 6px 5px; display: grid; gap: 3px; align-content: start; position: relative; overflow: hidden; }
+.thumb i { display: block; height: 3px; border-radius: 2px; background: #cbd5e1; }
+.thumb i:first-child { height: 5px; width: 70%; background: var(--c); }
+.thumb.sidebar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 15px; background: var(--c); opacity: 0.9; }
+.thumb.sidebar i { margin-left: 13px; }
+.theme b { display: block; font: 600 13px Sora; }
+.theme small { display: block; color: var(--muted); font-size: 11.5px; line-height: 1.35; margin-top: 2px; }
+
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; background: var(--c); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22); transition: 0.15s; }
+.swatch:hover { transform: scale(1.1); }
+.swatch[aria-pressed="true"] { border-color: #fff; box-shadow: 0 0 0 2px var(--c); }
+.swatch.default { background: conic-gradient(#3b82f6, #ea580c, #059669, #1e3a5f, #3b82f6); }
+.custom { position: relative; width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; cursor: pointer;
+   background: conic-gradient(#ef4444, #f59e0b, #22c55e, #06b6d4, #3b82f6, #a855f7, #ef4444); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22); }
+.custom::after { content: "+"; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); pointer-events: none; }
+.custom input { position: absolute; inset: -8px; width: 42px; height: 42px; border: 0; cursor: pointer; opacity: 0; }
+
+.segmented { display: flex; padding: 3px; border-radius: 12px; background: var(--panel-2); border: 1px solid var(--line); }
+.segmented button { flex: 1; border: 0; background: transparent; border-radius: 9px; padding: 7px 8px; color: var(--muted); font-weight: 500; transition: 0.15s; }
+.segmented button[aria-pressed="true"] { background: rgba(59, 130, 246, 0.22); color: #fff; }
+input[type="range"] { width: 100%; accent-color: var(--blue); }
+select { width: 100%; padding: 8px 10px; border-radius: 10px; background: #0d1530; border: 1px solid var(--line); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; color: var(--muted); }
+.switch { width: 38px; height: 22px; border-radius: 99px; border: 0; background: #26324f; position: relative; transition: 0.2s; flex: none; }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: 0.2s; }
+.switch[aria-checked="true"] { background: var(--blue); }
+.switch[aria-checked="true"]::after { left: 19px; }
+
+.sections { display: grid; gap: 4px; }
+.section-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 10px; background: var(--panel-2); border: 1px solid transparent; user-select: none; }
+.section-item.dragging { opacity: 0.4; }
+.section-item.over { border-color: rgba(96, 165, 250, 0.6); }
+.section-item .grip { cursor: grab; color: var(--subtle); letter-spacing: -2px; }
+.section-item span { flex: 1; text-transform: capitalize; }
+.section-item input { accent-color: var(--blue); width: 15px; height: 15px; }
+.hint { color: var(--subtle); font-size: 11.5px; margin-top: 8px; }
+
+/* Stage */
+.stage { display: flex; flex-direction: column; min-width: 0; }
+.topbar { display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: rgba(6, 10, 22, 0.6); backdrop-filter: blur(16px); }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 13px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel-2); color: var(--muted); font-weight: 500; white-space: nowrap; }
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+.pill.warn { color: #fde68a; border-color: rgba(251, 191, 36, 0.35); }
+.pill.warn .dot { background: var(--warn); box-shadow: 0 0 10px var(--warn); }
+.pill.error { color: #fecaca; border-color: rgba(248, 113, 113, 0.4); }
+.pill.error .dot { background: #f87171; box-shadow: 0 0 10px #f87171; }
+.spacer { flex: 1; }
+.zoom { display: flex; align-items: center; gap: 2px; }
+.btn { height: 36px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel-2); font-weight: 600; transition: 0.15s; display: inline-flex; align-items: center; gap: 7px; }
+.btn:hover { border-color: rgba(96, 165, 250, 0.45); background: rgba(59, 130, 246, 0.12); }
+.btn.icon { width: 36px; padding: 0; justify-content: center; }
+.btn.primary { border: 0; color: #fff; background: linear-gradient(90deg, var(--blue), #38bdf8); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.9); }
+.btn:disabled { opacity: 0.55; cursor: wait; }
+.canvas { flex: 1; overflow: auto; padding: 36px 24px 60px; }
+.sheet { margin: 0 auto; transform-origin: top center; border-radius: 4px; overflow: hidden; background: #fff;
+   box-shadow: 0 40px 120px -30px rgba(29, 78, 216, 0.55), 0 0 0 1px rgba(148, 170, 255, 0.14); transition: height 0.2s; }
+iframe { display: block; border: 0; width: 100%; height: 100%; background: #fff; }
+
+.toast { position: fixed; right: 20px; bottom: 20px; max-width: 420px; padding: 13px 16px; border-radius: 14px; border: 1px solid var(--line);
+   background: rgba(13, 20, 42, 0.95); backdrop-filter: blur(16px); box-shadow: 0 20px 50px -20px #000; transform: translateY(16px); opacity: 0; transition: 0.25s; pointer-events: none; }
+.toast.show { transform: none; opacity: 1; pointer-events: auto; }
+.toast a { color: #93c5fd; font-weight: 600; margin-left: 8px; }
+kbd { font: 11px ui-monospace, Consolas, monospace; color: var(--subtle); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+@media (max-width: 900px) { .app { grid-template-columns: 1fr; } .panel { display: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+   <aside class="panel">
+      <div class="brand">
+         <span class="logo">CV</span>
+         <div><h1>CV Studio</h1><p id="file">Loading…</p></div>
+      </div>
+      <div class="controls">
+         <div class="group"><div class="label">Theme</div><div class="themes" id="themes"></div></div>
+         <div class="group"><div class="label">Accent</div><div class="swatches" id="swatches"></div></div>
+         <div class="group"><div class="label">Paper</div>
+            <div class="segmented" data-key="paper"><button data-value="a4">A4</button><button data-value="letter">US Letter</button></div>
+         </div>
+         <div class="group"><div class="label">Page limit</div>
+            <div class="segmented" data-key="maxPages"><button data-value="1">1 page</button><button data-value="2">2 pages</button><button data-value="0">No limit</button></div>
+            <div class="row">Auto-fit to the limit <button class="switch" role="switch" data-key="fit" aria-label="Auto-fit"></button></div>
+         </div>
+         <div class="group"><div class="label">Density <output id="densityOut"></output></div>
+            <input type="range" id="density" min="0.8" max="1.2" step="0.01" aria-label="Density">
+            <p class="hint">Starting spacing and type scale. Auto-fit only ever tightens it.</p>
+         </div>
+         <div class="group"><div class="label">Details</div>
+            <div class="row">Show photo <button class="switch" role="switch" data-key="photo" aria-label="Show photo"></button></div>
+            <div class="row">Dates
+               <select id="dateFormat" style="width:auto">
+                  <option value="short">May 2024</option><option value="long">May 2024 (full)</option>
+                  <option value="numeric">05/2024</option><option value="year">2024</option>
+               </select>
+            </div>
+         </div>
+         <div class="group"><div class="label">Sections</div>
+            <div class="sections" id="sections"></div>
+            <p class="hint">Drag to reorder, untick to hide. Sidebar themes keep their sidebar sections on the side.</p>
+         </div>
+      </div>
+   </aside>
+
+   <main class="stage">
+      <div class="topbar">
+         <span class="pill" id="status"><span class="dot"></span><span>Rendering…</span></span>
+         <span class="pill" id="densityPill" hidden></span>
+         <span class="spacer"></span>
+         <div class="zoom">
+            <button class="btn icon" id="zoomOut" title="Zoom out">−</button>
+            <button class="btn" id="zoomFit" title="Fit to width">Fit</button>
+            <button class="btn icon" id="zoomIn" title="Zoom in">+</button>
+         </div>
+         <button class="btn" id="save" title="Save settings (Ctrl+S)">Save settings</button>
+         <button class="btn" data-export="png">PNG</button>
+         <button class="btn" data-export="html">HTML</button>
+         <button class="btn primary" data-export="pdf" title="Export PDF (Ctrl+E)">Export PDF</button>
+      </div>
+      <div class="canvas" id="canvas"><div class="sheet" id="sheet"><iframe id="preview" title="CV preview"></iframe></div></div>
+   </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $ = (sel) => document.querySelector(sel);
+const PAGE = { a4: { w: 794, h: 1123 }, letter: { w: 816, h: 1056 } };
+const ACCENTS = ["#2563eb", "#4f46e5", "#7c3aed", "#db2777", "#e11d48", "#ea580c", "#ca8a04", "#059669", "#0d9488", "#0f172a"];
+let state, opts, zoom = null, lastHeight = 0, timer;
+
+const toast = (html, ms = 5000) => {
+   const el = $("#toast");
+   el.innerHTML = html;
+   el.classList.add("show");
+   clearTimeout(toast.t);
+   toast.t = setTimeout(() => el.classList.remove("show"), ms);
+};
+
+const api = async (path, body) => {
+   const res = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+   const data = await res.json();
+   if (!res.ok) throw new Error(data.error || res.statusText);
+   return data;
+};
+
+const allSections = () => {
+   const order = opts.sections && opts.sections.length ? opts.sections : state.sectionIds;
+   return [...order, ...state.sectionIds.filter((id) => !order.includes(id))];
+};
+
+// Pushes option changes to the server and refreshes the preview (debounced).
+const update = (patch) => {
+   Object.assign(opts, patch);
+   paint();
+   clearTimeout(timer);
+   timer = setTimeout(() => {
+      api("/api/options", pick()).catch(() => {});
+      reload();
+   }, 120);
+};
+
+const pick = () => ({
+   theme: opts.theme, accent: opts.accent, paper: opts.paper, maxPages: opts.maxPages, fit: opts.fit,
+   density: opts.density, photo: opts.photo, dateFormat: opts.dateFormat, sections: opts.sections, hide: opts.hide,
+});
+
+const reload = () => {
+   $("#status").className = "pill";
+   $("#status").lastElementChild.textContent = "Rendering…";
+   $("#preview").src = "/preview?o=" + encodeURIComponent(JSON.stringify(pick())) + "&t=" + Date.now();
+};
+
+const layout = () => {
+   const page = PAGE[opts.paper] || PAGE.a4;
+   const height = Math.max(page.h, lastHeight || page.h);
+   const available = $("#canvas").clientWidth - 48;
+   const scale = zoom ?? Math.min(1.25, available / page.w);
+   const sheet = $("#sheet");
+   sheet.style.width = page.w + "px";
+   sheet.style.height = height + "px";
+   sheet.style.transform = `scale(${scale})`;
+   sheet.style.marginBottom = (scale - 1) * height + "px";
+   $("#zoomFit").textContent = Math.round(scale * 100) + "%";
+};
+
+const paint = () => {
+   $("#themes").innerHTML = state.themes.map((t) => `
+      <button class="theme" data-theme="${t.id}" aria-pressed="${t.id === opts.theme}">
+         <span class="thumb ${t.sidebar ? "sidebar" : ""}" style="--c:${t.id === opts.theme && opts.accent ? opts.accent : t.accent}"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+         <span><b>${t.name}</b><small>${t.description}</small></span>
+      </button>`).join("");
+
+   $("#swatches").innerHTML =
+      `<button class="swatch default" title="Theme default" aria-pressed="${!opts.accent}" data-accent=""></button>` +
+      ACCENTS.map((c) => `<button class="swatch" style="--c:${c}" title="${c}" aria-pressed="${opts.accent === c}" data-accent="${c}"></button>`).join("") +
+      `<label class="custom" title="Custom colour"><input type="color" id="customAccent" value="${opts.accent || "#2563eb"}"></label>`;
+
+   document.querySelectorAll(".segmented").forEach((group) => {
+      group.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(String(opts[group.dataset.key]) === b.dataset.value)));
+   });
+   document.querySelectorAll(".switch").forEach((s) => s.setAttribute("aria-checked", String(Boolean(opts[s.dataset.key]))));
+   $("#density").value = opts.density;
+   $("#densityOut").textContent = Number(opts.density).toFixed(2);
+   $("#dateFormat").value = opts.dateFormat;
+
+   const hidden = new Set(opts.hide || []);
+   $("#sections").innerHTML = allSections().map((id) => `
+      <div class="section-item" draggable="true" data-id="${id}">
+         <span class="grip">⋮⋮</span><span>${id}</span>
+         <input type="checkbox" ${hidden.has(id) ? "" : "checked"} aria-label="Show ${id}">
+      </div>`).join("");
+   layout();
+};
+
+// Event wiring
+$("#themes").addEventListener("click", (e) => {
+   const b = e.target.closest("[data-theme]");
+   if (b) update({ theme: b.dataset.theme });
+});
+$("#swatches").addEventListener("click", (e) => {
+   const b = e.target.closest("[data-accent]");
+   if (b) update({ accent: b.dataset.accent || null });
+});
+$("#swatches").addEventListener("input", (e) => { if (e.target.id === "customAccent") update({ accent: e.target.value }); });
+document.querySelectorAll(".segmented").forEach((group) =>
+   group.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      const key = group.dataset.key;
+      update({ [key]: key === "maxPages" ? Number(b.dataset.value) : b.dataset.value });
+   })
+);
+document.querySelectorAll(".switch").forEach((s) => s.addEventListener("click", () => update({ [s.dataset.key]: !opts[s.dataset.key] })));
+$("#density").addEventListener("input", (e) => update({ density: Number(e.target.value) }));
+$("#dateFormat").addEventListener("change", (e) => update({ dateFormat: e.target.value }));
+
+$("#sections").addEventListener("change", (e) => {
+   const id = e.target.closest(".section-item")?.dataset.id;
+   const hide = new Set(opts.hide || []);
+   e.target.checked ? hide.delete(id) : hide.add(id);
+   update({ hide: [...hide] });
+});
+let dragged;
+$("#sections").addEventListener("dragstart", (e) => { dragged = e.target.closest(".section-item"); dragged.classList.add("dragging"); });
+$("#sections").addEventListener("dragend", () => { dragged?.classList.remove("dragging"); document.querySelectorAll(".over").forEach((el) => el.classList.remove("over")); });
+$("#sections").addEventListener("dragover", (e) => {
+   e.preventDefault();
+   document.querySelectorAll(".over").forEach((el) => el.classList.remove("over"));
+   e.target.closest(".section-item")?.classList.add("over");
+});
+$("#sections").addEventListener("drop", (e) => {
+   e.preventDefault();
+   const target = e.target.closest(".section-item");
+   if (!dragged || !target || target === dragged) return;
+   const order = allSections().filter((id) => id !== dragged.dataset.id);
+   order.splice(order.indexOf(target.dataset.id), 0, dragged.dataset.id);
+   update({ sections: order });
+});
+
+$("#zoomIn").onclick = () => { zoom = Math.min(2, (zoom ?? parseFloat($("#zoomFit").textContent) / 100) + 0.1); layout(); };
+$("#zoomOut").onclick = () => { zoom = Math.max(0.4, (zoom ?? parseFloat($("#zoomFit").textContent) / 100) - 0.1); layout(); };
+$("#zoomFit").onclick = () => { zoom = null; layout(); };
+window.addEventListener("resize", layout);
+
+const exportAs = async (format, button) => {
+   button.disabled = true;
+   const label = button.textContent;
+   button.textContent = "Exporting…";
+   try {
+      const result = await api("/api/export", { formats: [format], options: pick() });
+      const file = result.files[0];
+      toast(`✓ ${file.name} · ${result.pages} page${result.pages === 1 ? "" : "s"}${result.adjusted ? ` · fitted at ${result.density}` : ""}<a href="${file.url}" target="_blank" rel="noopener">Open</a>`);
+   } catch (error) {
+      toast("Export failed: " + error.message);
+   } finally {
+      button.disabled = false;
+      button.textContent = label;
+   }
+};
+document.querySelectorAll("[data-export]").forEach((b) => b.addEventListener("click", () => exportAs(b.dataset.export, b)));
+
+const save = async () => {
+   try {
+      const { path } = await api("/api/save", pick());
+      toast(`✓ Settings saved to ${path}. <kbd>cv-builder build</kbd> will use them.`);
+   } catch (error) {
+      toast("Save failed: " + error.message);
+   }
+};
+$("#save").onclick = save;
+window.addEventListener("keydown", (e) => {
+   if (!(e.ctrlKey || e.metaKey)) return;
+   if (e.key === "s") { e.preventDefault(); save(); }
+   if (e.key === "e") { e.preventDefault(); exportAs("pdf", document.querySelector('[data-export="pdf"]')); }
+});
+
+// Messages from the preview: fit results or render errors.
+window.addEventListener("message", (e) => {
+   if (e.source !== $("#preview").contentWindow) return;
+   const status = $("#status");
+   if (e.data?.type === "cv-error") {
+      status.className = "pill error";
+      status.lastElementChild.textContent = "Resume has errors";
+      $("#densityPill").hidden = true;
+      return;
+   }
+   if (e.data?.type !== "cv-fit") return;
+   const { pages, fits, density, adjusted, height } = e.data;
+   lastHeight = height;
+   status.className = "pill" + (fits ? "" : " warn");
+   status.lastElementChild.textContent = fits
+      ? `Fits on ${pages} page${pages === 1 ? "" : "s"}`
+      : `${pages} pages · over the limit`;
+   const pill = $("#densityPill");
+   pill.hidden = !adjusted;
+   pill.textContent = `Auto-fit · density ${density.toFixed(2)}`;
+   layout();
+});
+
+new EventSource("/events").onmessage = (e) => { if (e.data === "reload") reload(); };
+
+fetch("/api/state").then((r) => r.json()).then((s) => {
+   state = s;
+   opts = { ...s.options, sections: s.options.sections, hide: s.options.hide || [] };
+   $("#file").textContent = `${s.resume} · settings in ${s.config}`;
+   paint();
+   reload();
+});
+</script>
+</body>
+</html>
