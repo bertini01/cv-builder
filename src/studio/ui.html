@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CV Studio</title>
+<title>CVForge Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap">
 <style>
@@ -108,7 +108,7 @@ kbd { font: 11px ui-monospace, Consolas, monospace; color: var(--subtle); border
    <aside class="panel">
       <div class="brand">
          <span class="logo">CV</span>
-         <div><h1>CV Studio</h1><p id="file">Loading…</p></div>
+         <div><h1>CVForge Studio</h1><p id="file">Loading…</p></div>
       </div>
       <div class="controls">
          <div class="group"><div class="label">Theme</div><div class="themes" id="themes"></div></div>
@@ -320,7 +320,7 @@ document.querySelectorAll("[data-export]").forEach((b) => b.addEventListener("cl
 const save = async () => {
    try {
       const { path } = await api("/api/save", pick());
-      toast(`✓ Settings saved to ${path}. <kbd>cv-builder build</kbd> will use them.`);
+      toast(`✓ Settings saved to ${path}. <kbd>cvforge build</kbd> will use them.`);
    } catch (error) {
       toast("Save failed: " + error.message);
    }

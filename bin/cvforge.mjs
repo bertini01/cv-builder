@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// cv-builder command-line interface. Run `cv-builder --help` for usage.
+// CVForge command-line interface. Run `cvforge --help` for usage.
 import { copyFileSync, existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,14 +18,14 @@ const paint = (code) => (text) => (useColor ? `\x1b[${code}m${text}\x1b[0m` : St
 const c = { bold: paint(1), dim: paint(2), red: paint(31), green: paint(32), yellow: paint(33), blue: paint(34), cyan: paint(36) };
 
 const HELP = `
-${c.bold("cv-builder")} ${c.dim(`v${version}`)}: write your CV as data, get a beautiful PDF.
+${c.bold("cvforge")} ${c.dim(`v${version}`)}: write your CV as data, get a beautiful PDF.
 
 ${c.bold("Usage")}
-  cv-builder build [resume.json]      Build the CV (PDF by default)
-  cv-builder studio [resume.json]     Live preview with theme and style controls
-  cv-builder themes                   List the available themes
-  cv-builder init [resume.json]       Create a starter resume to edit
-  cv-builder validate [resume.json]   Check a resume for problems
+  cvforge build [resume.json]      Build the CV (PDF by default)
+  cvforge studio [resume.json]     Live preview with theme and style controls
+  cvforge themes                   List the available themes
+  cvforge init [resume.json]       Create a starter resume to edit
+  cvforge validate [resume.json]   Check a resume for problems
 
 ${c.bold("Style")}
   -t, --theme <id>        ${themeIds.join(" | ")}
@@ -54,10 +54,10 @@ ${c.bold("Studio")}
   -v, --version           Show the version
 
 ${c.bold("Examples")}
-  cv-builder init
-  cv-builder build resume.json --theme executive --accent "#7c3aed"
-  cv-builder build resume.json -f pdf,png --paper letter
-  cv-builder studio resume.json
+  cvforge init
+  cvforge build resume.json --theme executive --accent "#7c3aed"
+  cvforge build resume.json -f pdf,png --paper letter
+  cvforge studio resume.json
 `;
 
 const { values: flags, positionals } = parseArgs({
@@ -156,7 +156,7 @@ const commands = {
       for (const theme of THEMES) {
          console.log(`  ${c.bold(theme.id.padEnd(11))} ${theme.description}  ${c.dim(theme.accent)}`);
       }
-      console.log(`\n  ${c.dim("Use with: cv-builder build resume.json --theme <id>")}\n`);
+      console.log(`\n  ${c.dim("Use with: cvforge build resume.json --theme <id>")}\n`);
    },
 
    init() {
@@ -168,7 +168,7 @@ const commands = {
       const avatar = join(dirname(target), "avatar.svg");
       if (!existsSync(avatar)) copyFileSync(join(ROOT, "examples/avatar.svg"), avatar);
       console.log(`${c.green("✓")} Created ${relative(process.cwd(), target)}. Edit it, then run:`);
-      console.log(`  ${c.cyan(`cv-builder studio ${relative(process.cwd(), target)}`)}`);
+      console.log(`  ${c.cyan(`cvforge studio ${relative(process.cwd(), target)}`)}`);
    },
 
    async validate() {
@@ -182,7 +182,7 @@ const commands = {
 
 const main = async () => {
    if (flags.version) return console.log(version);
-   // `cv-builder resume.json` is shorthand for `cv-builder build resume.json`.
+   // `cvforge resume.json` is shorthand for `cvforge build resume.json`.
    if (/.(json|m?js)$/i.test(positionals[0] ?? "")) positionals.unshift("build");
    const [command = "build"] = positionals;
    if (flags.help || command === "help") return console.log(HELP);

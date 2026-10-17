@@ -1,5 +1,5 @@
 // A small headless-Chrome driver over the DevTools protocol. It uses the
-// browser already installed on the machine, so cv-builder needs no packages.
+// browser already installed on the machine, so CVForge needs no packages.
 import { spawn } from "node:child_process";
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -44,7 +44,7 @@ export const findBrowser = () => {
 };
 
 export const openBrowser = async () => {
-   const workDir = mkdtempSync(join(tmpdir(), "cv-builder-"));
+   const workDir = mkdtempSync(join(tmpdir(), "cvforge-"));
    const port = 9200 + Math.floor(Math.random() * 700);
    const child = spawn(
       findBrowser(),

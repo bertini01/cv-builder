@@ -1,7 +1,7 @@
 {
-  "name": "cv-builder",
-  "version": "1.0.0",
-  "description": "Write your CV as data, get a beautiful, ATS-friendly PDF. JSON Resume compatible, five premium themes, auto-fit to one page, live studio. Zero dependencies.",
+  "name": "cvforge",
+  "version": "1.1.0",
+  "description": "Write your CV as data, get a beautiful, ATS-friendly PDF. Eight premium themes, JSON Resume compatible, auto-fit to one page, live studio and web app. Zero dependencies.",
   "type": "module",
   "license": "MIT",
   "author": "Iradukunda Bertin (https://bertin.vercel.app)",
@@ -19,10 +19,11 @@
     "resume-builder",
     "cv-generator",
     "ats",
-    "themes"
+    "themes",
+    "cli"
   ],
   "bin": {
-    "cv-builder": "bin/cv-builder.mjs"
+    "cvforge": "bin/cvforge.mjs"
   },
   "exports": {
     ".": "./src/index.mjs"
@@ -30,7 +31,8 @@
   "files": [
     "bin",
     "src",
-    "examples",
+    "examples/resume.json",
+    "examples/avatar.svg",
     "README.md",
     "LICENSE"
   ],
@@ -38,9 +40,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "node bin/cv-builder.mjs build examples/resume.json",
-    "studio": "node bin/cv-builder.mjs studio examples/resume.json",
+    "build": "node bin/cvforge.mjs build examples/resume.json",
+    "studio": "node bin/cvforge.mjs studio examples/resume.json",
     "previews": "node scripts/previews.mjs",
+    "web": "node scripts/build-web.mjs",
     "test": "node --test \"test/*.test.mjs\""
   }
 }

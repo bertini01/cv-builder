@@ -22,10 +22,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      # No dependencies to install: cv-builder uses only Node built-ins and
+      # No dependencies to install: CVForge uses only Node built-ins and
       # the Chrome that ships with GitHub's Ubuntu runners.
       - run: npm test
-      - run: node bin/cv-builder.mjs build examples/resume.json --theme noir -f pdf,png -o dist
+      - run: node bin/cvforge.mjs build examples/resume.json --theme noir -f pdf,png -o dist
       - uses: actions/upload-artifact@v4
         if: matrix.node == 24
         with:

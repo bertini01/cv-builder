@@ -1,4 +1,4 @@
-// CV Studio: a local web app to preview, style and export a CV live.
+// CVForge Studio: a local web app to preview, style and export a CV live.
 // Listens on 127.0.0.1 only and rejects cross-site requests.
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync, statSync, watch } from "node:fs";
@@ -78,7 +78,7 @@ const openInBrowser = (url) => {
 };
 
 export const startStudio = async ({ resumePath, configPath, options: initial, port = 4321, open = true }) => {
-   if (!existsSync(resumePath)) throw new Error(`Resume not found: ${resumePath}. Create one with "cv-builder init".`);
+   if (!existsSync(resumePath)) throw new Error(`Resume not found: ${resumePath}. Create one with "cvforge init".`);
 
    let current = initial;
    const outDir = resolve(initial.output?.dir ?? "dist");
@@ -208,7 +208,7 @@ export const startStudio = async ({ resumePath, configPath, options: initial, po
 
    origin = `http://localhost:${actual}`;
    allowedOrigins = new Set([origin, `http://127.0.0.1:${actual}`]);
-   console.log(`\n  CV Studio  ${origin}\n  Editing    ${resumePath}\n  Exports to ${outDir}\n\n  Press Ctrl+C to stop.\n`);
+   console.log(`\n  CVForge Studio  ${origin}\n  Editing    ${resumePath}\n  Exports to ${outDir}\n\n  Press Ctrl+C to stop.\n`);
    if (open) openInBrowser(origin);
    return { server, url: origin };
 };

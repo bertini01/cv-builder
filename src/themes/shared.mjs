@@ -225,3 +225,12 @@ export const section = (ctx, id, opts = {}) => {
 };
 
 export const sections = (ctx, ids, opts) => ids.map((id) => section(ctx, id, opts)).join("");
+
+// Short sections that read well side by side in a compact "details" grid.
+export const DETAIL_IDS = ["education", "skills", "languages", "certificates", "awards", "interests"];
+
+// Splits ordered section ids into the flowing story and the details grid.
+export const splitSections = (ids, detailIds = DETAIL_IDS) => ({
+   story: ids.filter((id) => !detailIds.includes(id)),
+   details: ids.filter((id) => detailIds.includes(id)),
+});

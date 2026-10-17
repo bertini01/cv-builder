@@ -8,7 +8,9 @@ import { loadResume } from "../src/resume.mjs";
 import { THEMES, themeIds } from "../src/themes/index.mjs";
 
 const example = fileURLToPath(new URL("../examples/resume.json", import.meta.url));
-const { resume } = await loadResume(example);
+const loaded = await loadResume(example);
+// The example omits interests; add some so every section type is exercised.
+const resume = { ...loaded.resume, interests: [{ name: "Open source", keywords: ["mentoring"] }] };
 
 for (const theme of THEMES) {
    test(`${theme.id} renders every populated section`, () => {

@@ -1,83 +1,89 @@
 <div align="center">
 
-# CV Builder
+# CVForge
 
 **Write your CV as data. Get a beautiful, ATS-friendly PDF.**
 
-Five premium themes · JSON Resume compatible · auto-fit to one page · live studio · zero dependencies
+Eight premium themes · JSON Resume compatible · auto-fit to one page · live studio · web app · zero dependencies
 
 [![Test](https://github.com/bertini01/cv-builder/actions/workflows/test.yml/badge.svg)](https://github.com/bertini01/cv-builder/actions/workflows/test.yml)
-![Node](https://img.shields.io/badge/node-%E2%89%A522-3b82f6)
+[![npm](https://img.shields.io/npm/v/cvforge?color=3b82f6)](https://www.npmjs.com/package/cvforge)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-22c55e)
 ![License](https://img.shields.io/badge/license-MIT-0f172a)
 
-<img src="docs/studio.jpg" alt="CV Studio: theme picker, accent colours and live A4 preview" width="900">
+<img src="docs/webapp.jpg" alt="CVForge web app: theme gallery, live preview and auto-fit" width="900">
 
 </div>
 
 ---
 
-Keep your career in one JSON file, then render it in any theme, any accent colour, A4 or US Letter, as PDF, HTML or PNG. Change a line, rebuild, done. No design tools, no copy-pasting between templates, no subscriptions, and nothing leaves your machine.
+Keep your career in one JSON file, then render it in any theme, any accent colour, A4 or US Letter, as PDF, HTML or PNG. Change a line, rebuild, done. No design tools, no copy-pasting between templates, no subscriptions, and your data stays on your machine.
 
-## Features
+## Three ways to use it
 
-- **Five premium themes**: modern, Swiss, classic serif, dark sidebar and developer, each tuned for print.
-- **Auto-fit**: give it a page limit and it gently tightens spacing and type until the CV fits, then verifies the real PDF page count.
-- **CV Studio**: a local live editor with theme switching, accent colours, paper size, density, drag-to-reorder sections and one-click export. It reloads whenever you save your resume.
-- **[JSON Resume](https://jsonresume.org/schema) compatible**: bring an existing `resume.json`, or write the resume as a JS module.
-- **ATS-friendly output**: real, selectable text in a logical reading order, plus a tagged, outlined PDF.
-- **Flexible**: section order, hidden sections, renamed or translated titles, locale-aware dates, optional photo, and lightweight Markdown (`**bold**`, `*italic*`, `` `code` ``, `[links](https://…)`).
-- **Robust**: clear validation messages with exact paths, JSON errors with line and column, and safe HTML escaping throughout.
-- **Zero dependencies**: Node's standard library plus the Chrome, Edge, Chromium or Brave already on your machine.
+| | |
+| --- | --- |
+| **Web app** | Open it in the browser, paste or import your resume, pick a theme and export a PDF. Nothing is uploaded; everything runs in your browser. |
+| **CLI** | `npx cvforge build resume.json`: one command to a pixel-perfect PDF, ideal for scripts and CI. |
+| **Studio** | `npx cvforge studio resume.json`: a local live editor that reloads whenever you save your resume. |
 
 ## Themes
 
+Every theme takes any accent colour, A4 or Letter, and auto-fits to your page limit.
+
 <table>
 <tr>
-<td align="center"><img src="docs/previews/aurora.png" width="260" alt="Aurora theme"><br><b>Aurora</b><br><sub>Modern two-column, gradient accent</sub></td>
-<td align="center"><img src="docs/previews/minimal.png" width="260" alt="Minimal theme"><br><b>Minimal</b><br><sub>Swiss single column, most ATS-friendly</sub></td>
-<td align="center"><img src="docs/previews/executive.png" width="260" alt="Executive theme"><br><b>Executive</b><br><sub>Classic serif, centred, gold rules</sub></td>
+<td align="center" width="25%"><img src="docs/previews/aurora.png" alt="Aurora theme"><br><b>Aurora</b><br><sub>Modern two-column, hairline gradient</sub></td>
+<td align="center" width="25%"><img src="docs/previews/editorial.png" alt="Editorial theme"><br><b>Editorial</b><br><sub>Magazine spread, drop-cap lede</sub></td>
+<td align="center" width="25%"><img src="docs/previews/atelier.png" alt="Atelier theme"><br><b>Atelier</b><br><sub>Fashion-house luxury, Bodoni</sub></td>
+<td align="center" width="25%"><img src="docs/previews/horizon.png" alt="Horizon theme"><br><b>Horizon</b><br><sub>Colour band and timeline</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/previews/noir.png" width="260" alt="Noir theme"><br><b>Noir</b><br><sub>Bold dark sidebar, great with a photo</sub></td>
-<td align="center"><img src="docs/previews/terminal.png" width="260" alt="Terminal theme"><br><b>Terminal</b><br><sub>Developer flavour, code-token skills</sub></td>
-<td align="center">Every theme takes<br>any accent colour,<br>A4 or Letter,<br>and auto-fits.</td>
+<td align="center"><img src="docs/previews/executive.png" alt="Executive theme"><br><b>Executive</b><br><sub>Quiet luxury, ivory and gold</sub></td>
+<td align="center"><img src="docs/previews/minimal.png" alt="Minimal theme"><br><b>Minimal</b><br><sub>Swiss, most ATS-friendly</sub></td>
+<td align="center"><img src="docs/previews/noir.png" alt="Noir theme"><br><b>Noir</b><br><sub>Deep-ink sidebar</sub></td>
+<td align="center"><img src="docs/previews/terminal.png" alt="Terminal theme"><br><b>Terminal</b><br><sub>Developer flavour</sub></td>
 </tr>
 </table>
 
+## Features
+
+- **Premium design system**: 10 pt body type, generous margins, two typefaces per theme, restrained colour and right-aligned dates, following current guidance on readable, recruiter-friendly CVs.
+- **Auto-fit**: give it a page limit and it gently tightens spacing and type until the CV fits, then verifies the real PDF page count.
+- **ATS-friendly output**: real, selectable text in a logical reading order, plus a tagged, outlined PDF.
+- **[JSON Resume](https://jsonresume.org/schema) compatible**: bring an existing `resume.json`, or write the resume as a JS module.
+- **Flexible**: section order, hidden sections, renamed titles, built-in French, German, Spanish and Portuguese headings, locale-aware dates, optional photo and lightweight Markdown (`**bold**`, `*italic*`, `` `code` ``, `[links](https://…)`).
+- **Multi-page done right**: page margins repeat on every printed page, and entries never split awkwardly across pages.
+- **Safe**: all text is escaped, and links are limited to `https`, `mailto` and `tel`, so a shared resume file can't inject scripts.
+- **Zero dependencies**: Node's standard library plus the Chrome, Edge, Chromium or Brave already on your machine.
+
 ## Quick start
 
-Requires **Node.js 22+** and a Chromium-based browser (Chrome, Edge, Chromium or Brave).
+Requires **Node.js 22+** and a Chromium-based browser for the CLI and studio. The web app only needs a browser.
 
 ```bash
-# Install the CLI from GitHub
-npm install -g github:bertini01/cv-builder
-
-# Create a starter resume, then open the studio
-cv-builder init
-cv-builder studio resume.json
-
-# Or build straight to PDF
-cv-builder build resume.json --theme executive --accent "#7c3aed"
+npx cvforge init                       # creates resume.json (and a sample avatar)
+npx cvforge studio resume.json         # live editor at http://localhost:4321
+npx cvforge build resume.json --theme editorial --accent "#7c3aed"
 ```
 
-Prefer not to install globally? Clone the repo and run `node bin/cv-builder.mjs` instead of `cv-builder`.
+Prefer a global install? `npm install -g cvforge`, then use `cvforge …`.
 
 ## Commands
 
 | Command | What it does |
 | --- | --- |
-| `cv-builder build [resume.json]` | Build the CV (PDF by default). `cv-builder resume.json` works too. |
-| `cv-builder studio [resume.json]` | Open CV Studio at `http://localhost:4321` with live reload. |
-| `cv-builder themes` | List the themes. |
-| `cv-builder init [resume.json]` | Create a starter resume (and a sample avatar). |
-| `cv-builder validate [resume.json]` | Check a resume and explain any problems. |
+| `cvforge build [resume.json]` | Build the CV (PDF by default). `cvforge resume.json` works too. |
+| `cvforge studio [resume.json]` | Open the studio at `http://localhost:4321` with live reload. |
+| `cvforge themes` | List the themes. |
+| `cvforge init [resume.json]` | Create a starter resume. |
+| `cvforge validate [resume.json]` | Check a resume and explain any problems. |
 
 ### Options
 
 | Flag | Default | Description |
 | --- | --- | --- |
-| `-t, --theme <id>` | `aurora` | `aurora`, `minimal`, `executive`, `noir`, `terminal` |
+| `-t, --theme <id>` | `aurora` | `aurora`, `editorial`, `atelier`, `horizon`, `executive`, `minimal`, `noir`, `terminal` |
 | `-a, --accent <hex>` | theme's own | Accent colour, e.g. `"#e11d48"` |
 | `-p, --paper <size>` | `a4` | `a4` or `letter` |
 | `--max-pages <n>` | `1` | Page limit to auto-fit to (`0` = no limit) |
@@ -86,7 +92,7 @@ Prefer not to install globally? Clone the repo and run `node bin/cv-builder.mjs`
 | `--no-photo` | | Leave out `basics.image` |
 | `--sections <list>` | theme order | Sections to show, in order, e.g. `summary,work,skills` |
 | `--hide <list>` | | Sections to leave out |
-| `--locale <code>` | `en` | Date locale, e.g. `fr`, `de`, `pt-BR` |
+| `--locale <code>` | `en` | Dates and headings, e.g. `fr`, `de`, `es`, `pt` |
 | `--date-format <f>` | `short` | `short` (May 2024), `long`, `numeric` (05/2024) or `year` |
 | `-f, --format <list>` | `pdf` | Any of `pdf,html,png` |
 | `-o, --out <dir>` | `dist` | Output folder |
@@ -103,24 +109,22 @@ Settings can live in `cv.config.json` next to your resume. The studio's **Save s
 
 ```json
 {
-  "theme": "noir",
-  "accent": "#e11d48",
+  "theme": "atelier",
+  "accent": "#7c3aed",
   "paper": "letter",
   "maxPages": 1,
-  "photo": true,
   "sections": ["summary", "work", "projects", "skills", "education", "languages"],
-  "labels": { "work": "Expérience", "present": "Aujourd'hui" },
+  "labels": { "work": "Career" },
   "locale": "fr",
-  "dateFormat": "short",
   "output": { "dir": "dist", "name": "{name} CV {theme}", "formats": ["pdf", "png"] }
 }
 ```
 
-`labels` renames any section title (and the word used for ongoing roles). Setting `locale` to `fr`, `de`, `es` or `pt` translates titles and "Present" automatically; your own `labels` always win.
+Setting `locale` to `fr`, `de`, `es` or `pt` translates titles and "Present" automatically; your own `labels` always win.
 
 ## Resume format
 
-CV Builder reads the [JSON Resume schema](https://jsonresume.org/schema), so an existing `resume.json` should work as is. A few optional extensions make developer CVs better:
+CVForge reads the [JSON Resume schema](https://jsonresume.org/schema), so an existing `resume.json` should work as is. A few optional extensions make developer CVs better:
 
 | Field | Shown as |
 | --- | --- |
@@ -128,28 +132,30 @@ CV Builder reads the [JSON Resume schema](https://jsonresume.org/schema), so an 
 | `projects[].tagline` | A one-line subtitle under the project name |
 | `projects[].source` | A "Code" link next to the "Live" link |
 
-Dates can be `YYYY`, `YYYY-MM` or `YYYY-MM-DD`; a missing `endDate` reads as "Present". `basics.image` can be a URL or a path relative to the resume (`png`, `jpg`, `webp`, `svg`); local images are embedded so the HTML output is self-contained. Summaries and highlights accept `**bold**`, `*italic*`, `` `code` `` and `[links](https://…)`.
+Dates can be `YYYY`, `YYYY-MM` or `YYYY-MM-DD`; a missing `endDate` reads as "Present". `basics.image` can be a URL or a path relative to the resume (`png`, `jpg`, `webp`, `svg`); local images are embedded so the HTML output is self-contained. See [`examples/resume.json`](examples/resume.json).
 
-Resumes can also be JavaScript modules (`resume.mjs` exporting the object as `default`), which is handy for comments or computed values.
+## Web app
 
-See [`examples/resume.json`](examples/resume.json) for a complete example.
+The web app is a static site built from the same theme engine (`npm run web` builds it into `site/`). It renders and auto-fits in the browser and exports PDFs through the browser's own print engine. It ships with a strict Content Security Policy and stores your resume only in your browser's local storage.
+
+Host your own copy in one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbertini01%2Fcv-builder)
 
 ## How auto-fit works
 
-Every theme sizes its type and spacing from one CSS variable, `--d` (density). When the CV is over the page limit, CV Builder binary-searches the largest density between `0.78` and your starting density at which it fits, inside the page itself. The studio preview runs the exact same script, so what you see is what you get. After printing, the build counts the PDF's real pages and nudges further if print rounding tipped it over.
-
-If it can't fit even at the minimum, you get a clear message to trim content rather than an unreadable CV.
+Every theme sizes its type and spacing from one CSS variable, `--d` (density). When the CV is over the page limit, CVForge binary-searches the largest density between `0.78` and your starting density at which it fits. The exact same function runs in the CLI (through headless Chrome), the studio and the web app, so the preview always matches the export. After printing, the CLI counts the PDF's real pages and nudges further if print rounding tipped it over.
 
 ## Programmatic API
 
 ```js
-import { build, mergeOptions } from "cv-builder";
+import { build, mergeOptions } from "cvforge";
 
 const options = mergeOptions({ theme: "terminal", output: { formats: ["pdf", "png"] } });
 const { files, pages, density } = await build("resume.json", options);
 ```
 
-Also exported: `renderDocument` (resume to HTML string), `loadResume`, `validateResume`, `normalizeResume`, `THEMES`, `fitScript` and more. See [`src/index.mjs`](src/index.mjs).
+Also exported: `renderDocument` (resume to HTML string), `loadResume`, `validateResume`, `normalizeResume`, `THEMES`, `fitDocument` and more. See [`src/index.mjs`](src/index.mjs). The rendering modules are browser-safe and can be imported directly from `src/render.mjs`, `src/normalize.mjs` and `src/options.mjs`.
 
 ## Writing a theme
 
@@ -159,8 +165,8 @@ A theme is a module in `src/themes/` exporting an object:
 export default {
    id: "mytheme",
    name: "My Theme",
-   description: "One line for the studio and `cv-builder themes`.",
-   accent: "#2563eb",                       // default accent
+   description: "One line for the studio and `cvforge themes`.",
+   accent: "#2563eb",
    fonts: "family=Inter:wght@400;600",       // Google Fonts query (optional)
    side: ["skills", "languages"],            // optional sidebar sections
    render: (ctx) => `<main class="page">…</main>`,
@@ -168,22 +174,23 @@ export default {
 };
 ```
 
-`ctx` holds the normalised `resume`, the merged `labels`, the `main` and `side` section ids in order, and `photo`. Helpers in [`src/themes/shared.mjs`](src/themes/shared.mjs) render contact lists and every section with stable class names, so a theme is mostly CSS. Use `s(9, "pt")` for sizes so they scale with density. Register the theme in `src/themes/index.mjs`.
+`ctx` holds the normalised `resume`, the merged `labels`, the `main` and `side` section ids in order, and `photo`. Helpers in [`src/themes/shared.mjs`](src/themes/shared.mjs) render contact lists and every section with stable class names, and `splitSections` builds a compact details grid, so a theme is mostly CSS. Use `s(9, "pt")` for sizes so they scale with density. Register the theme in `src/themes/index.mjs`, then run `npm run previews` and `npm test`.
 
 ## FAQ
 
-**Why is a browser required?** Chrome's print engine produces excellent, searchable PDFs. Using the browser you already have keeps CV Builder dependency-free. Set `CHROME_PATH` if yours is somewhere unusual.
+**Why does the CLI need a browser?** Chrome's print engine produces excellent, searchable PDFs, and using the one you already have keeps CVForge dependency-free. Set `CHROME_PATH` if yours is somewhere unusual.
 
 **Does it work offline?** Yes. Themes use Google Fonts when online and fall back to system fonts otherwise.
 
-**Is my data sent anywhere?** No. Everything runs locally; the studio only listens on `127.0.0.1` and rejects cross-site requests.
+**Is my data sent anywhere?** No. The CLI and studio run locally (the studio only listens on `127.0.0.1` and rejects cross-site requests), and the web app keeps everything in your browser.
 
 ## Development
 
 ```bash
 npm test            # unit tests + real PDF builds (skipped without a browser)
 npm run studio      # studio with the example resume
-npm run previews    # regenerate the README theme gallery
+npm run web         # build the web app into site/
+npm run previews    # regenerate the theme gallery
 ```
 
 ## License

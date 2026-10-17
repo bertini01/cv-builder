@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CVForge | Beautiful CVs from JSON, right in your browser</title>
+<meta name="description" content="Write your CV as data and get a beautiful, ATS-friendly PDF. Eight premium themes, auto-fit to one page, JSON Resume compatible. Free, open source and private: nothing leaves your browser.">
+<meta name="theme-color" content="#060a16">
+<meta property="og:title" content="CVForge: beautiful CVs from JSON">
+<meta property="og:description" content="Eight premium themes, auto-fit to one page, private by design. Free and open source.">
+<meta property="og:image" content="/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<script type="module" src="/app.js"></script>
+</head>
+<body>
+<div class="app">
+   <aside class="panel">
+      <header class="brand">
+         <span class="logo" aria-hidden="true">CV</span>
+         <div>
+            <h1>CVForge</h1>
+            <p>Beautiful CVs from data. Private by design.</p>
+         </div>
+      </header>
+
+      <div class="tabs" role="tablist">
+         <button role="tab" id="tab-design" aria-controls="pane-design" aria-selected="true">Design</button>
+         <button role="tab" id="tab-content" aria-controls="pane-content" aria-selected="false">Content</button>
+      </div>
+
+      <div class="pane" id="pane-design" role="tabpanel" aria-labelledby="tab-design">
+         <div class="group"><div class="label">Theme</div><div class="themes" id="themes"></div></div>
+         <div class="group"><div class="label">Accent</div><div class="swatches" id="swatches"></div></div>
+         <div class="group"><div class="label">Paper</div>
+            <div class="segmented" data-key="paper"><button data-value="a4">A4</button><button data-value="letter">US Letter</button></div>
+         </div>
+         <div class="group"><div class="label">Page limit</div>
+            <div class="segmented" data-key="maxPages"><button data-value="1">1 page</button><button data-value="2">2 pages</button><button data-value="0">No limit</button></div>
+            <div class="row">Auto-fit to the limit <button class="switch" role="switch" data-key="fit" aria-label="Auto-fit"></button></div>
+         </div>
+         <div class="group"><div class="label">Density <output id="densityOut"></output></div>
+            <input type="range" id="density" min="0.8" max="1.2" step="0.01" aria-label="Density">
+            <p class="hint">Starting spacing and type scale. Auto-fit only ever tightens it.</p>
+         </div>
+         <div class="group"><div class="label">Details</div>
+            <div class="row">Show photo <button class="switch" role="switch" data-key="photo" aria-label="Show photo"></button></div>
+            <div class="row">Dates
+               <select id="dateFormat"><option value="short">May 2024</option><option value="long">May 2024 (full)</option><option value="numeric">05/2024</option><option value="year">2024</option></select>
+            </div>
+            <div class="row">Language
+               <select id="locale"><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pt">Português</option></select>
+            </div>
+         </div>
+      </div>
+
+      <div class="pane" id="pane-content" role="tabpanel" aria-labelledby="tab-content" hidden>
+         <div class="toolbar">
+            <label class="btn small">Import JSON<input type="file" id="importFile" accept=".json,application/json" hidden></label>
+            <button class="btn small" id="loadExample">Example</button>
+            <button class="btn small" id="formatJson">Format</button>
+            <button class="btn small" id="downloadJson">Download</button>
+         </div>
+         <div class="photo-row">
+            <label class="btn small">Upload photo<input type="file" id="photoFile" accept="image/png,image/jpeg,image/webp" hidden></label>
+            <span id="photoStatus" class="hint"></span>
+            <button class="link" id="removePhoto" hidden>Remove</button>
+         </div>
+         <textarea id="editor" spellcheck="false" autocomplete="off" aria-label="Resume JSON"></textarea>
+         <ul class="messages" id="messages" aria-live="polite"></ul>
+         <p class="hint">Uses the <a href="https://jsonresume.org/schema" target="_blank" rel="noopener">JSON Resume</a> format. Summaries and highlights accept **bold**, *italic* and [links](https://…).</p>
+      </div>
+
+      <footer class="foot">
+         <span>🔒 Your data never leaves this browser.</span>
+         <a href="https://github.com/bertini01/cv-builder" target="_blank" rel="noopener">GitHub</a>
+      </footer>
+   </aside>
+
+   <main class="stage">
+      <div class="topbar">
+         <span class="pill" id="status"><span class="dot"></span><span>Loading…</span></span>
+         <span class="pill" id="densityPill" hidden></span>
+         <span class="spacer"></span>
+         <div class="zoom">
+            <button class="btn icon" id="zoomOut" title="Zoom out" aria-label="Zoom out">−</button>
+            <button class="btn" id="zoomFit" title="Fit to width">Fit</button>
+            <button class="btn icon" id="zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+         </div>
+         <button class="btn" id="downloadHtml">HTML</button>
+         <button class="btn primary" id="exportPdf" title="Export PDF (Ctrl+P)">Export PDF</button>
+      </div>
+      <div class="canvas" id="canvas"><div class="sheet" id="sheet"><iframe id="preview" title="CV preview"></iframe></div></div>
+   </main>
+</div>
+
+<dialog id="printHelp">
+   <h2>Save as PDF</h2>
+   <p>Your browser's print dialog is about to open. For a perfect PDF:</p>
+   <ol>
+      <li>Destination: <b>Save as PDF</b></li>
+      <li>Margins: <b>None</b> (or Default)</li>
+      <li>Leave <b>Headers and footers</b> unticked</li>
+   </ol>
+   <p class="hint">Chrome, Edge and Brave give the best results. Want a one-command PDF? <code>npx cvforge build resume.json</code></p>
+   <form method="dialog" class="dialog-actions"><button class="btn" value="cancel">Cancel</button><button class="btn primary" value="print">Continue</button></form>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+</body>
+</html>

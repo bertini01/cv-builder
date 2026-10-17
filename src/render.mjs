@@ -1,5 +1,5 @@
 // Turns a normalised resume + options into a complete, standalone HTML page.
-import { SECTION_IDS, resolveLabels } from "./config.mjs";
+import { SECTION_IDS, resolveLabels } from "./options.mjs";
 import { escapeHtml as esc } from "./format.mjs";
 import { getTheme } from "./themes/index.mjs";
 
@@ -41,7 +41,9 @@ a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 img { display: block; max-width: 100%; }
 .icon { width: 1em; height: 1em; flex: none; }
-.page { width: var(--page-w); min-height: var(--page-h); position: relative; }
+.page { width: var(--page-w); min-height: var(--page-h); position: relative; font-variant-numeric: tabular-nums;
+   /* Repeat the page padding on every printed page of a multi-page CV. */
+   -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .entry, .project, .edu, .skill-group, .simple li { break-inside: avoid; }
 .section-title { break-after: avoid; }
 code { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; font-size: 0.92em; }
@@ -74,7 +76,7 @@ export const renderDocument = (resume, options) => {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(name)}${label ? ` | ${esc(label)}` : ""}</title>
 <meta name="author" content="${esc(name)}">
-<meta name="generator" content="cv-builder">
+<meta name="generator" content="cvforge">
 ${fonts}
 <style>
 @page { size: ${paper.css}; margin: 0; }

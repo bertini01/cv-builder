@@ -86,3 +86,18 @@ export const slugify = (value = "") =>
       .replace(/[̀-ͯ]/g, "")
       .replace(/[^a-zA-Z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
+
+// Only web, email and phone links survive; bare domains get https://.
+// Everything else (javascript:, data:, file: ...) becomes "" and renders as text.
+export const safeUrl = (url) => {
+   const value = String(url ?? "").trim();
+   if (/^(https?:\/\/|mailto:|tel:)/i.test(value)) return value;
+   if (/^[\w-]+(\.[\w-]+)+(:\d+)?(\/\S*)?$/i.test(value)) return `https://${value}`;
+   return "";
+};
+
+// Photos: web URLs or embedded raster/SVG images only.
+export const safeImage = (src) => {
+   const value = String(src ?? "").trim();
+   return /^(https?:\/\/|data:image\/(png|jpe?g|webp|gif|svg\+xml);)/i.test(value) ? value : "";
+};

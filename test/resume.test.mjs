@@ -61,3 +61,21 @@ test("normalisation tolerates sparse data", () => {
    assert.equal(resume.projects[0].tagline, "Lead");
    assert.equal(resume.projects[0].period, "");
 });
+
+test("unsafe links and images are neutralised; bare domains get https", () => {
+   const resume = normalizeResume({
+      basics: {
+         name: "X",
+         url: "javascript:alert(1)",
+         image: "data:text/html,<script>alert(1)</script>",
+         profiles: [{ network: "GitHub", url: "github.com/x" }, { network: "Evil", url: "javascript:void(0)", username: "u" }],
+      },
+      projects: [{ name: "P", url: "data:text/html,x", source: "https://github.com/x/p" }],
+   });
+   assert.equal(resume.basics.url, "");
+   assert.equal(resume.basics.image, "");
+   assert.equal(resume.basics.profiles[0].url, "https://github.com/x");
+   assert.equal(resume.basics.profiles[1].url, "");
+   assert.equal(resume.projects[0].url, "");
+   assert.equal(resume.projects[0].source, "https://github.com/x/p");
+});
