@@ -4,12 +4,16 @@
 
 **Write your CV as data. Get a beautiful, ATS-friendly PDF.**
 
+### [Open the web app → cvdesign.vercel.app](https://cvdesign.vercel.app)
+
 Eight premium themes · JSON Resume compatible · auto-fit to one page · live studio · web app · zero dependencies
 
 [![Test](https://github.com/bertini01/cv-builder/actions/workflows/test.yml/badge.svg)](https://github.com/bertini01/cv-builder/actions/workflows/test.yml)
 [![npm](https://img.shields.io/npm/v/cvforge?color=3b82f6)](https://www.npmjs.com/package/cvforge)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-22c55e)
 ![License](https://img.shields.io/badge/license-MIT-0f172a)
+
+If CVForge saves you time, please ⭐ [star the repo](https://github.com/bertini01/cv-builder): it helps others find it.
 
 <img src="docs/webapp.jpg" alt="CVForge web app: theme gallery, live preview and auto-fit" width="900">
 
@@ -23,7 +27,7 @@ Keep your career in one JSON file, then render it in any theme, any accent colou
 
 | | |
 | --- | --- |
-| **Web app** | Open it in the browser, paste or import your resume, pick a theme and export a PDF. Nothing is uploaded; everything runs in your browser. |
+| **[Web app](https://cvdesign.vercel.app)** | Fill in a simple form (no JSON needed), pick a design and export a PDF. Nothing is uploaded; everything runs in your browser. |
 | **CLI** | `npx cvforge build resume.json`: one command to a pixel-perfect PDF, ideal for scripts and CI. |
 | **Studio** | `npx cvforge studio resume.json`: a local live editor that reloads whenever you save your resume. |
 
@@ -135,6 +139,8 @@ CVForge reads the [JSON Resume schema](https://jsonresume.org/schema), so an exi
 Dates can be `YYYY`, `YYYY-MM` or `YYYY-MM-DD`; a missing `endDate` reads as "Present". `basics.image` can be a URL or a path relative to the resume (`png`, `jpg`, `webp`, `svg`); local images are embedded so the HTML output is self-contained. See [`examples/resume.json`](examples/resume.json).
 
 ## Web app
+
+Try it at **[cvdesign.vercel.app](https://cvdesign.vercel.app)**. Fill in the form, or switch to the JSON tab to paste an existing JSON Resume; both stay in sync and are saved in your browser.
 
 The web app is a static site built from the same theme engine (`npm run web` builds it into `site/`). It renders and auto-fits in the browser and exports PDFs through the browser's own print engine. It ships with a strict Content Security Policy and stores your resume only in your browser's local storage.
 

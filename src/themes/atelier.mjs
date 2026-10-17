@@ -1,7 +1,7 @@
 // Atelier: fashion-house luxury. A Bodoni name and monogram, wide-tracked
 // champagne captions, hairline dividers and a great deal of air.
 import { escapeHtml as esc } from "../format.mjs";
-import { contactList, photo, s, sections } from "./shared.mjs";
+import { contactItems, contactList, photo, s, sections } from "./shared.mjs";
 
 const initials = (name = "") =>
    name
@@ -32,7 +32,7 @@ export default {
    </header>
    <div class="columns">
       <aside class="side">
-         <section class="section section--contact"><h2 class="section-title">Contact</h2>${contactList(ctx, { icons: false })}</section>
+         ${contactItems(ctx).length ? `<section class="section section--contact"><h2 class="section-title">Contact</h2>${contactList(ctx, { icons: false })}</section>` : ""}
          ${sections(ctx, ctx.side, { skills: { style: "inline" }, languages: { style: "text" } })}
       </aside>
       <div class="main">${sections(ctx, ctx.main, { projects: { layout: "list" } })}</div>
