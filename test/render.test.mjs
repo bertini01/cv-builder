@@ -77,3 +77,9 @@ test("a locale translates titles and 'Present'; user labels still win", async ()
    assert.ok(html.includes(">Savoir-faire</h2>"));
    assert.ok(html.includes("mars 2022 – Aujourd&#39;hui"));
 });
+
+test("an interest without a name renders as its keywords only", () => {
+   const html = renderDocument({ ...resume, interests: [{ name: "", keywords: ["Leadership", "Teamwork"] }] }, mergeOptions({ theme: "noir" }));
+   assert.ok(html.includes("<li>Leadership, Teamwork</li>"), "expected a plain keyword list");
+   assert.ok(!html.includes("<strong></strong>"));
+});

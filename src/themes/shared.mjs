@@ -211,7 +211,10 @@ const SECTION_RENDERERS = {
          }`
       ),
    interests: ({ resume }) =>
-      simpleList(resume.interests, (i) => `<strong>${esc(i.name)}</strong>${i.keywords.length ? ` · ${esc(i.keywords.join(", "))}` : ""}`),
+      // A nameless entry is just its keywords, e.g. a plain list of strengths.
+      simpleList(resume.interests, (i) =>
+         [i.name && `<strong>${esc(i.name)}</strong>`, i.keywords.length && esc(i.keywords.join(", "))].filter(Boolean).join(" · ")
+      ),
    references: ({ resume }) =>
       simpleList(resume.references, (r) => `<blockquote>“${inline(r.reference)}”</blockquote><cite>${esc(r.name)}</cite>`),
 };
